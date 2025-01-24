@@ -12,4 +12,4 @@ The variable "cnt_j" can be selected from 1 to 12, which represents the 12 drivi
 
 For the OCV data, the ".mat" file named with "C20DisCh" provid the C/20 current rate discharge and charge voltage curve and relevant data. You can click the file and run "View_Data" to see the OCV result.
 
-Original SOurce of the data set: "Kollmeyer, Phillip J.; Skells, Michael, 2023, "Multi Temperature Li-ion Battery Data - SB LiMotive 5Ah", https://doi.org/10.5683/SP3/LFPKAS"
+Original Source of the data set: "Kollmeyer, Phillip J.; Skells, Michael, 2023, "Multi Temperature Li-ion Battery Data - SB LiMotive 5Ah", https://doi.org/10.5683/SP3/LFPKAS"
