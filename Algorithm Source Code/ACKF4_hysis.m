@@ -148,7 +148,7 @@ Tem=Para(6);
 soc=x(3);
 % Tem=round(Tem/5)*5;
 % Eocv=NN_ocv([soc,Tem/20,I/40]')+3.6;
-Eocv=NN_ocv_3d([soc,Tem/20,I/40]')+3.6;
+Eocv=OCV_3d([soc,Tem/20,I/40]')+3.6;
 if soc<0
     Eocv=2.8+3*soc;
 end
