@@ -1,7 +1,8 @@
 clear;
+% The clear for function  is used to clear the persistent value
 clear ACKF ACKF3 ACKF4 ACKF4_hysis
 PreTime=datetime('now');
- %%  Ñ¡ÔñÑ­»·ºÅ cnt_j ÎÂ¶È   cnt_degc
+ %%  é€‰æ‹©å¾ªç¯å· cnt_j æ¸©åº¦   cnt_degc
 cnt_degc=2;  % 1 2 4 5
 cnt_j=1;  %  1 UDDS; 3 LA92; 4 US06 
 if cnt_j==2
@@ -59,8 +60,8 @@ R3=diag(0.1);
 R4=R1;
 R_hys=R1;
 
-Xhat=[0;0;0.5];         %³õÊ¼Öµ
-x_ackf=zeros(n,step);    %´æ´¢ackfµÄ¹À¼ÆÖµ£»
+Xhat=[0;0;0.5];         %åˆå§‹å€¼
+x_ackf=zeros(n,step);    %å­˜å‚¨ackfçš„ä¼°è®¡å€¼ï¼›
 x_ackf(:,1)=Xhat;
 x_ackf3=x_ackf;
 x_ackf4=x_ackf;
@@ -128,14 +129,14 @@ SE3=(e3.^2);
 SE4=(e4.^2);
 SE5=e5.^2;
 
-%% »æÖÆ¹À¼Æ½á¹û
+%% ç»˜åˆ¶ä¼°è®¡ç»“æœ
 NColor1='#E36255';
 Ncolor2='#9DC877';
 NColor3='#FFA500';
 figure;
 set(gcf, 'Position', [200 200 320 280]);
 subplot(1,3,1);
-hold on; % ±£³ÖËùÓĞºóĞø»æÍ¼ÔÚÍ¬Ò»Í¼±íÖĞ
+hold on; % ä¿æŒæ‰€æœ‰åç»­ç»˜å›¾åœ¨åŒä¸€å›¾è¡¨ä¸­
 Lengths=601;
 plot(t(1:Lengths), soc_ref(1:Lengths) * 100, 'k', 'linewidth', 1);
 plot(t(1:Lengths), x_soc2(1:Lengths) * 100, 'linewidth', 0.87, 'color', Ncolor2);
@@ -197,9 +198,9 @@ disp([' Prop       RMSE4 : ' num2str(RMSE4) '%']);
 CostTime=datetime('now')-PreTime;
 disp(CostTime);
 
-%% º¯Êı²¿·Ö
+%% å‡½æ•°éƒ¨åˆ†
 function xindex=ZeroIndex(y0,offset)
-% È¥³ı³¤Ê±¼äµçÁ÷Îª0µÄÊı¾İ¶Î
+% å»é™¤é•¿æ—¶é—´ç”µæµä¸º0çš„æ•°æ®æ®µ
 LEN=length(y0);
 K_cnt=0;
 xindex=LEN;
