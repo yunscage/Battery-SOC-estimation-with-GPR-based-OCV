@@ -1,6 +1,7 @@
 clear;
-% The clear for function  is used to clear the persistent value
-clear ACKF ACKF3 ACKF4 ACKF4_hysis
+% The clear for function  is used to clear the persistent value. 
+% When delete the clear of the function of "ACKF,...", the persistent value will be affected by previous run.
+% clear ACKF ACKF3 ACKF4 ACKF4_hysis
 PreTime=datetime('now');
  %%  选择循环号 cnt_j 温度   cnt_degc
 cnt_degc=2;  % 1 2 4 5
