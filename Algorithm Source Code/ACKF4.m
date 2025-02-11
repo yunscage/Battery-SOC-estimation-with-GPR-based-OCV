@@ -177,7 +177,7 @@ if soc<0.11&& soc>0
     Eocv=Tab_OCV(soc,Tem);
 end
 Eocv_check=OCV_3d([soc,Tem/20,I/40]')+3.6;
-if abs(Eocv_check-Eocv)>0.01
+if abs(Eocv_check-Eocv)>0.01 || Tem>0
     Eocv=Eocv_check;
 end
 ut=Eocv-[1 1 0]*x-R0*I;
