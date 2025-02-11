@@ -1,3 +1,4 @@
+% This version has been modified and to keep the results constent with the previous version, the previous figure results are kept.
 clear;
 % The clear for function  is used to clear the persistent value. 
 % When delete the clear of the function of "ACKF,...", the persistent value will be affected by previous run.
