@@ -1,9 +1,9 @@
 function [X,Q,R,Zhat_k] = ACKF4_hysis(X0,u,Z,Q,R,Tem,mhv,BattCap)
-%ACKF ´Ë´¦ÏÔÊ¾ÓÐ¹Ø´Ëº¯ÊýµÄÕªÒª
-%   Zk        ±¾Ê±¿Ì²âÁ¿Êä³ö
-%   X0        ÉÏÒ»Ê±¿Ì¹À¼Æ×´Ì¬
-%   u k-1  uk ÉÏÒ»Ê±¿ÌÊäÈë
-%   Pk  ±¾Ê±¿ÌÐ­·½²î
+%ACKF æ­¤å¤„æ˜¾ç¤ºæœ‰å…³æ­¤å‡½æ•°çš„æ‘˜è¦
+%   Zk        æœ¬æ—¶åˆ»æµ‹é‡è¾“å‡º
+%   X0        ä¸Šä¸€æ—¶åˆ»ä¼°è®¡çŠ¶æ€
+%   u k-1  uk ä¸Šä¸€æ—¶åˆ»è¾“å…¥
+%   Pk  æœ¬æ—¶åˆ»åæ–¹å·®
 n=length(X0);
 m=2*n;
 w=1/m;
@@ -28,25 +28,25 @@ Para(7)=BattCap;
 
 Xi_k_1=zeros(n,m); 
 Xi_k=zeros(n,m); 
-Zi_k_=zeros(1,m);       %Zi£¬k|k-1´«²¥ÈÝ»ýµã
-Xi_k_minus=zeros(n,m);   %X*i£¬k|k-1  ´«²¥ÈÝ»ýµã
+Zi_k_=zeros(1,m);       %Ziï¼Œk|k-1ä¼ æ’­å®¹ç§¯ç‚¹
+Xi_k_minus=zeros(n,m);   %X*iï¼Œk|k-1  ä¼ æ’­å®¹ç§¯ç‚¹
 
-ksi=sqrt(m/2)*[eye(n),-eye(n)];%ÓÃÓë¼ÆËãksiµÄ¾ØÕó
+ksi=sqrt(m/2)*[eye(n),-eye(n)];%ç”¨ä¸Žè®¡ç®—ksiçš„çŸ©é˜µ
 
 
-%% Ô¤²â¸üÐÂ 
+%% é¢„æµ‹æ›´æ–° 
 a11=Para(2);
 a22=Para(3);
 
-A=diag([a11 a22 1]);%×´Ì¬×ªÒÆ¾ØÕó
+A=diag([a11 a22 1]);%çŠ¶æ€è½¬ç§»çŸ©é˜µ
 Xk_minus =State(X0,u_k_,Para);    
 Pk_k_1=A*Pk_k_1*A'+ Q;
 
-%% ²âÁ¿¸üÐÂ
-[Uk_1,Sk_1,~]=svd(Pk_k_1);%¶ÔPxx½øÐÐÆæÒìÖµ·Ö½â
+%% æµ‹é‡æ›´æ–°
+[Uk_1,Sk_1,~]=svd(Pk_k_1);%å¯¹Pxxè¿›è¡Œå¥‡å¼‚å€¼åˆ†è§£
 Sk=Uk_1*sqrt(Sk_1);
 for j=1:m
-    Xi_k(:,j)=Sk*ksi(:,j)+Xk_minus;   %¼ÆËãÇóÈÝ»ýµã 
+    Xi_k(:,j)=Sk*ksi(:,j)+Xk_minus;   %è®¡ç®—æ±‚å®¹ç§¯ç‚¹ 
 end
 
 % Xnn=zeros(m,3);
@@ -64,25 +64,25 @@ end
 % end
 Zhat_k=0;
 for j=1:m  
-    Zhat_k=w*Zi_k_(:,j)+Zhat_k;      %Á¿²âÔ¤²â
+    Zhat_k=w*Zi_k_(:,j)+Zhat_k;      %é‡æµ‹é¢„æµ‹
 end
 % u_m=(u+u_k_)/2;
 % DR=0.05*tanh(u_m^2/900);
 % Pzz=0.5*R+0.5*DR;
 Pzz=R;
 for j=1:m
-    Pzz=Pzz + w*(Zi_k_(:,j)-Zhat_k)*(Zi_k_(:,j)-Zhat_k)';%Ð­·½²îÔ¤²â
+    Pzz=Pzz + w*(Zi_k_(:,j)-Zhat_k)*(Zi_k_(:,j)-Zhat_k)';%åæ–¹å·®é¢„æµ‹
 end
 Pxz=zeros(n,1);
 for j=1:m
-    Pxz=Pxz + w*(Xi_k(:,j)-Xk_minus)*(Zi_k_(:,j)-Zhat_k)';%»¥Ð­·½²îÔ¤²â
+    Pxz=Pxz + w*(Xi_k(:,j)-Xk_minus)*(Zi_k_(:,j)-Zhat_k)';%äº’åæ–¹å·®é¢„æµ‹
 end
 u_k_=u;
-%******¸üÐÂÔöÒæ¾ØÕó******%
+%******æ›´æ–°å¢žç›ŠçŸ©é˜µ******%
 Kk=Pxz/Pzz;
-%******¸üÐÂ×´Ì¬ÏòÁ¿******%
+%******æ›´æ–°çŠ¶æ€å‘é‡******%
 X=Xk_minus+Kk*(Z-Zhat_k);
-%******¸üÐÂ×´Ì¬Ð­·½²î¾ØÕó******%
+%******æ›´æ–°çŠ¶æ€åæ–¹å·®çŸ©é˜µ******%
 Pk_k_1=Pk_k_1-Kk*Pzz*Kk';
 
 %% Adaptive Part
@@ -98,7 +98,7 @@ if index>Lw
     Weight=0.92;
     Hk=Weight*Hk+(1-Weight)*(Z-Zhat_k)*(Z-Zhat_k)';
     Q_=Weight*Q_+(1-Weight)*Kk*Hk*Kk';
-    % ÏÞÖÆ·½²î¸üÐÂ
+    % é™åˆ¶æ–¹å·®æ›´æ–°
     NOR_Q=norm(Q_);
     if (NOR_Q>Q_min) && (NOR_Q<=Q_max)
       Q=Q_;
@@ -123,8 +123,8 @@ index=index+1;
 end
 
 function X1 = State(X0,I,Para)
-% ´Ë´¦ÏÔÊ¾ÓÐ¹Ø´Ëº¯ÊýµÄÕªÒª
-%   ´Ë´¦ÏÔÊ¾ÏêÏ¸ËµÃ÷
+% æ­¤å¤„æ˜¾ç¤ºæœ‰å…³æ­¤å‡½æ•°çš„æ‘˜è¦
+%   æ­¤å¤„æ˜¾ç¤ºè¯¦ç»†è¯´æ˜Ž
 T=0.1;
 a11=Para(2);
 a22=Para(3);
@@ -134,20 +134,20 @@ C_cell=Para(7);
 
 eta=1;
 b3=-eta*T/3600/C_cell;
-A=diag([a11 a22 1]);%×´Ì¬×ªÒÆ¾ØÕó
-B=[b1;b2;b3];%¿ØÖÆ¾ØÕó
+A=diag([a11 a22 1]);%çŠ¶æ€è½¬ç§»çŸ©é˜µ
+B=[b1;b2;b3];%æŽ§åˆ¶çŸ©é˜µ
 X1=A*X0+B*I;
 X1=min(X1,[0.8;0.7;1]);
 end
 
 function ut = Measure(x,I,mhv,Para)
-% ´Ë´¦ÏÔÊ¾ÓÐ¹Ø´Ëº¯ÊýµÄÕªÒª
-%   ´Ë´¦ÏÔÊ¾ÏêÏ¸ËµÃ÷
+% æ­¤å¤„æ˜¾ç¤ºæœ‰å…³æ­¤å‡½æ•°çš„æ‘˜è¦
+%   æ­¤å¤„æ˜¾ç¤ºè¯¦ç»†è¯´æ˜Ž
 R0=Para(1);
 Tem=Para(6);
 soc=x(3);
 % Tem=round(Tem/5)*5;
-% Eocv=NN_ocv([soc,Tem/20,I/40]')+3.6;
+
 Eocv=OCV_3d([soc,Tem/20,I/40]')+3.6;
 if soc<0
     Eocv=2.8+3*soc;
